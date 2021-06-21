@@ -2,6 +2,7 @@
 
 namespace Laragrad\MoneyEngine;
 
+
 class MoneyEngineServiceProvider extends ServiceProvider
 {
     /**
@@ -24,8 +25,6 @@ class MoneyEngineServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__.'/../config/laravel-money-engine.php', 'laragrad.laravel-money-engine');
 
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-
-        $this->bootRules();
 
     }
 }
