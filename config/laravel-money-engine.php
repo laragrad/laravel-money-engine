@@ -4,10 +4,13 @@
  * Example of money-engine configuration
  */
 
+use Laragrad\MoneyEngine\Models\Entry;
+use Laragrad\MoneyEngine\Models\Operation;
+use Laragrad\MoneyEngine\Models\Contracts\AccountableEntityInterface;
 
 return [
 
-    'default_currency_code' => env('SYS_CURRENCY_CODE', 'RUB'),
+    'default_currency_code' => env('SYS_CURRENCY_CODE', 'USD'),
 
     'operation' => [
         'types' => [
