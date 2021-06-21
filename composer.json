@@ -21,8 +21,16 @@
 	},
 	"autoload" : {
 		"psr-4" : {
-			"Laragrad\\MoneyEngine" : "src"
+			"Laragrad\\MoneyEngine\\" : "src"
 		}
 	},
+	,
+	"extra" : {
+		"laravel" : {
+			"providers" : [
+				"Laragrad\\MoneyEngine\\MoneyEngineServiceProvider"
+			]
+		}
+	}
 	"minimum-stability" : "dev"
 }
