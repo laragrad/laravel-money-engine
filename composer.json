@@ -24,13 +24,12 @@
 			"Laragrad\\MoneyEngine\\" : "src"
 		}
 	},
-	,
 	"extra" : {
 		"laravel" : {
 			"providers" : [
 				"Laragrad\\MoneyEngine\\MoneyEngineServiceProvider"
 			]
 		}
-	}
+	},
 	"minimum-stability" : "dev"
 }
