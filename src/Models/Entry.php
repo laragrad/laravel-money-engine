@@ -17,10 +17,10 @@ class Entry extends Model
     use HasUserstamps;
     
     const ENTRY_SYS_TYPE_NORMAL = 1;
-    const ENTRY_SYS_TYPE_INVERSE = 2;
+    const ENTRY_SYS_TYPE_REVERSE = 2;
     const ENTRY_SYS_TYPE_STORNO = 3;
     
-    const ENTRY_COMPENSATION_KIND_INVERSE = 1;
+    const ENTRY_COMPENSATION_KIND_REVERSE = 1;
     const ENTRY_COMPENSATION_KIND_STORNO = 2;
     
     const ENTRY_TYPE_BANK_INCOMING = 1;
@@ -141,7 +141,7 @@ class Entry extends Model
      */
     public function isCompensation()
     {
-        return in_array($this->sys_type_code, [Entry::ENTRY_SYS_TYPE_INVERSE, Entry::ENTRY_SYS_TYPE_STORNO]);
+        return in_array($this->sys_type_code, [Entry::ENTRY_SYS_TYPE_REVERSE, Entry::ENTRY_SYS_TYPE_STORNO]);
     }
     
     /**

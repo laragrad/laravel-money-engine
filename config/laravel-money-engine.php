@@ -22,7 +22,7 @@ return [
 
     'entry' => [
         'compensation_kinds' => [
-            Entry::ENTRY_COMPENSATION_KIND_INVERSE => [
+            Entry::ENTRY_COMPENSATION_KIND_REVERSE => [
                 //
             ],
             Entry::ENTRY_COMPENSATION_KIND_STORNO => [
@@ -33,7 +33,7 @@ return [
             Entry::ENTRY_SYS_TYPE_NORMAL => [
                 'is_compensation' => false,
             ],
-            Entry::ENTRY_SYS_TYPE_INVERSE => [
+            Entry::ENTRY_SYS_TYPE_REVERSE => [
                 'is_compensation' => true,
             ],
             Entry::ENTRY_SYS_TYPE_STORNO => [
