@@ -2,6 +2,7 @@
 
 namespace Laragrad\MoneyEngine;
 
+use Illuminate\Support\ServiceProvider;
 
 class MoneyEngineServiceProvider extends ServiceProvider
 {
