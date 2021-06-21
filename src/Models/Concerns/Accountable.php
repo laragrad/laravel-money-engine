@@ -43,7 +43,7 @@ trait Accountable
     {
         if (! is_array($config = $this->accountConfig("accounts.{$accountType}"))) {
             throw new \Exception(
-                trans('laragrad/laravel-money-engine:messages.errors.account_type_is_incorrect', [
+                trans('laragrad/trans('laragrad/laravel-money-engine::messages.errors.account_type_is_incorrect', [
                     'type' => $accountType,
                     'entity' => self::class
                 ])
@@ -104,9 +104,9 @@ trait Accountable
 
         if (!is_null($accountKind)) {
             if ($accountKind == AccountableEntityInterface::ACCOUNT_KIND_ACTIVE && $value > 0.00) {
-                throw new \Exception(trans('laragrad/laravel-money-engine:messages.errors.active_account_rest_greater_zero'));
+                throw new \Exception(trans('laragrad/trans('laragrad/laravel-money-engine::messages.errors.active_account_rest_greater_zero'));
             } else if ($accountKind == AccountableEntityInterface::ACCOUNT_KIND_PASSIVE && $value < 0.00) {
-                throw new \Exception(trans('laragrad/laravel-money-engine:messages.errors.passive_account_rest_less_zero'));
+                throw new \Exception(trans('laragrad/trans('laragrad/laravel-money-engine::messages.errors.passive_account_rest_less_zero'));
             }
         }
 
