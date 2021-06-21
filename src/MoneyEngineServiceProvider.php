@@ -14,17 +14,22 @@ class MoneyEngineServiceProvider extends ServiceProvider
     public function boot()
     {
 
+        // lang
         $this->loadTranslationsFrom(__DIR__.'/../resources/lang/', 'laragrad/laravel-money-engine');
-
-        // Vendor config and translations publishing
         $this->publishes([
             __DIR__.'/../resources/lang/' => resource_path('lang/vendor/laragrad/laravel-money-engine'),
-            __DIR__.'/../config/laravel-money-engine.php' => config_path('laragrad/laravel-money-engine.php'),
-        ]);
+        ], 'lang');
 
-        // Merge vendor default config with published customized config
+        // config
+        $this->publishes([
+            __DIR__.'/../config/laravel-money-engine.php' => config_path('laragrad/laravel-money-engine.php'),
+        ], 'config');
         $this->mergeConfigFrom(__DIR__.'/../config/laravel-money-engine.php', 'laragrad.laravel-money-engine');
 
+        // migrations
+        $this->publishes([
+            __DIR__.'/../database/migrations/' => database_path('migrations'),
+        ], 'migrations');
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
     }

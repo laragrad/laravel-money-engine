@@ -35,11 +35,11 @@ class EntryService
     public function executeInverseEntry(Operation $operation, Entry $entry)
     {
         if ($entry->compensation_kind_code) {
-            throw new \Exception(trans('laragrad/trans('laragrad/laravel-money-engine::messages.runtime_errors.entry_has_been_already_compensated'));
+            throw new \Exception(trans('laragrad/laravel-money-engine::messages.runtime_errors.entry_has_been_already_compensated'));
         }
 
         if ($entry->sys_type_code != Entry::ENTRY_SYS_TYPE_NORMAL) {
-            throw new \Exception(trans('laragrad/trans('laragrad/laravel-money-engine::messages.runtime_errors.compensation_cannot_be_compensated'));
+            throw new \Exception(trans('laragrad/laravel-money-engine::messages.runtime_errors.compensation_cannot_be_compensated'));
         }
         
         $compensationEntry = new Entry();
@@ -86,11 +86,11 @@ class EntryService
     public function executeStornoEntry(Operation $operation, Entry $entry)
     {
         if ($entry->compensation_kind_code) {
-            throw new \Exception(trans('laragrad/trans('laragrad/laravel-money-engine::messages.runtime_errors.entry_has_been_already_compensated'));
+            throw new \Exception(trans('laragrad/laravel-money-engine::messages.runtime_errors.entry_has_been_already_compensated'));
         }
         
         if ($entry->sys_type_code != Entry::ENTRY_SYS_TYPE_NORMAL) {
-            throw new \Exception(trans('laragrad/trans('laragrad/laravel-money-engine::messages.runtime_errors.compensation_cannot_be_compensated'));
+            throw new \Exception(trans('laragrad/laravel-money-engine::messages.runtime_errors.compensation_cannot_be_compensated'));
         }
         
         $compensationEntry = new Entry();
