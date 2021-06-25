@@ -14,9 +14,18 @@ return [
 
     'operation' => [
         'types' => [
-            // 1 => [
-            //     'handler' => \App\Laragrad\MoneyEngine\Handlers\OperationExamleHandler::class,
-            // ],
+//             9999 => [
+//                 'handler' => \Laragrad\MoneyEngine\Example\Handlers\ExampleOperationHandler::class,
+//                 'validation' => [
+//                     'rules' => [
+//                         'type_code' => ['integer', 'required'],
+//                         'details' => ['array', 'required'],
+//                         'details.bank_payment_id' => ['uuid', 'required'],
+//                         'details.bill_id' => ['uuid', 'required'],
+//                         'details.sum' => ['numeric', 'required'],
+//                     ],
+//                 ],
+//             ],
         ],
     ],
 
@@ -41,37 +50,44 @@ return [
             ],
         ],
         'types' => [
-            // 1 => [
-            //     'db_account_code' => 'first_entity_sum',
-            //     'cr_account_code' => 'second_entity_sum',
-            //     'handler' => null,
-            // ],
+//             9999 => [
+//                 'db_account_code' => 'bank_pay_rest_sum',
+//                 'cr_account_code' => 'bill_payed_sum',
+//                 'handler' => null,
+//             ],
         ],
     ],
 
+    /**
+     * Account types
+     */
     'account' => [
-        // 'first_entity_sum' => [
-        //     'model' => \App\Models\FirstEntity::class,
-        //     'column' => 'sum',
-        //     'kind' => AccountableEntityInterface::ACCOUNT_KIND_ACTIVE,
-        // ],
-        // 'second_entity_sum' => [
-        //     'model' => \App\Models\SecondEntity::class,
-        //     'column' => 'sum',
-        //     'kind' => AccountableEntityInterface::ACCOUNT_KIND_PASSIVE,
-        // ],
+//         'bank_pay_rest_sum' => [
+//             'entity' => \Laragrad\MoneyEngine\Example\Models\TmpBankPayment::class,
+//             'column' => 'rest_sum',
+//             'kind' => AccountableEntityInterface::ACCOUNT_KIND_PASSIVE,
+//         ],
+//         'bill_payed_sum' => [
+//             'entity' => \Laragrad\MoneyEngine\Example\Models\TmpBill::class,
+//             'column' => 'paid_sum',
+//             'kind' => AccountableEntityInterface::ACCOUNT_KIND_PASSIVE,
+//         ],
     ],
 
-    'entity' => [
-        // \App\Models\FirstEntity::class => [
-        //     'accounts' => [
-        //         'first_entity_sum',
-        //     ],
-        // ],
-        // \App\Models\SecondEntity::class => [
-        //     'accounts' => [
-        //         'second_entity_sum',
-        //     ],
-        // ],
+    /**
+     * Accountable entities
+     * -- There is the list of entities that has an account attributes
+     */
+    'entities' => [
+//         \Laragrad\MoneyEngine\Example\Models\TmpBankPayment::class => [
+//             'accounts' => [
+//                 'bank_pay_rest_sum',
+//             ],
+//         ],
+//         \Laragrad\MoneyEngine\Example\Models\TmpBill::class => [
+//             'accounts' => [
+//                 'bill_payed_sum',
+//             ],
+//         ],
     ],
 ];

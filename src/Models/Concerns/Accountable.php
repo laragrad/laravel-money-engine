@@ -2,47 +2,81 @@
 
 namespace Laragrad\MoneyEngine\Models\Concerns;
 
+use Arr, Config;
+use Laragrad\MoneyEngine\Exceptions\MoneyEngineException;
+use Laragrad\MoneyEngine\Models\Contracts\AccountableEntityInterface;
+use Laragrad\MoneyEngine\Models\Entry;
 
 trait Accountable
 {
-    static $entityConfig = [];
+    /**
+     * Stored entity configuration
+     *
+     * @var array
+     */
+    protected static $entityConfig = [];
 
     /**
+     * Returns full or part of entity configuration
      *
-     * @param string $path
+     * @param string $path Configuration
      * @param mixed $default
      * @return mixed
      */
-    public function accountConfig(string $path = null, $default = null)
+    public function entityConfig(string $path = null, $default = null)
     {
-        if (is_null(static::$entityConfig) || !isset(static::$entityConfig[self::class])) {
-            $config = \Config::get("laragrad.laravel-money-engine.entity." . self::class);
-
-            $accounts = [];
-            foreach ($config['accounts'] as $key) {
-                $accounts[$key] = \Config::get("laragrad.laravel-money-engine.account.{$key}");
-            }
-            $config['accounts'] = $accounts;
-            static::$entityConfig[self::class] = $config;
+        if (!isset(static::$entityConfig[self::class])) {
+            static::$entityConfig[self::class] = $this->loadEntityConfig();
         }
+
+        $config = static::$entityConfig[self::class];
 
         if ($path) {
-            return \Arr::get(static::$entityConfig[self::class], $path) ?? null;
+            return Arr::get($config, $path) ?? null;
+        } else {
+            return $config;
         }
-
-        return static::$entityConfig[self::class];
     }
 
     /**
+     * Load entity configuration
+     *
+     * @throws MoneyEngineException
+     * @return array
+     */
+    protected function loadEntityConfig()
+    {
+        $config = Config::get("laragrad.laravel-money-engine.entities." . self::class);
+
+        if (!is_array($config)) {
+            throw new MoneyEngineException(trans(
+                'laragrad/laravel-money-engine::messages.errors.entity_config_is_empty',
+                ['class' => self::class]
+            ));
+        }
+
+        $accounts = [];
+        foreach ($config['accounts'] as $key) {
+            $accounts[$key] = Config::get("laragrad.laravel-money-engine.account.{$key}");
+        }
+        $config['accounts'] = $accounts;
+
+        // TODO Translations
+
+        return $config;
+    }
+
+    /**
+     * Get accountable sum column name
      *
      * @param string $accountType
-     * @throws \RuntimeException
+     * @throws MoneyEngineException
      * @return string
      */
     public function getAccountSumColumn(string $accountType) : string
     {
-        if (! is_array($config = $this->accountConfig("accounts.{$accountType}"))) {
-            throw new \Exception(
+        if (! is_array($config = $this->entityConfig("accounts.{$accountType}"))) {
+            throw new MoneyEngineException(
                 trans('laragrad/laravel-money-engine::messages.errors.account_type_is_incorrect', [
                     'type' => $accountType,
                     'entity' => self::class
@@ -54,6 +88,7 @@ trait Accountable
     }
 
     /**
+     * Gets accountable sum
      *
      * @param string $accountType
      * @return float
@@ -64,6 +99,7 @@ trait Accountable
     }
 
     /**
+     * Sets accountable sum
      *
      * @param string $accountType
      * @param float $value
@@ -76,6 +112,7 @@ trait Accountable
     }
 
     /**
+     * Changes accountable sum
      *
      * @param string $accountType
      * @param float $value
@@ -92,21 +129,26 @@ trait Accountable
     }
 
     /**
+     * Validate accountable sum
      *
      * @param string $accountType
      * @param float $value
-     * @throws \Exception
+     * @throws MoneyEngineException
      * @return boolean
      */
     public function validateAccountSum(string $accountType, float $value)
     {
-        $accountKind = $this->accountConfig("accounts.{$accountType}.kind", null);
+        $accountKind = $this->entityConfig("accounts.{$accountType}.kind", null);
 
         if (!is_null($accountKind)) {
             if ($accountKind == AccountableEntityInterface::ACCOUNT_KIND_ACTIVE && $value > 0.00) {
-                throw new \Exception(trans('laragrad/laravel-money-engine::messages.errors.active_account_rest_greater_zero'));
+                throw new MoneyEngineException(trans(
+                    'laragrad/laravel-money-engine::messages.errors.active_account_rest_greater_zero'
+                ));
             } else if ($accountKind == AccountableEntityInterface::ACCOUNT_KIND_PASSIVE && $value < 0.00) {
-                throw new \Exception(trans('laragrad/laravel-money-engine::messages.errors.passive_account_rest_less_zero'));
+                throw new MoneyEngineException(trans(
+                    'laragrad/laravel-money-engine::messages.errors.passive_account_rest_less_zero'
+                ));
             }
         }
 
@@ -114,6 +156,7 @@ trait Accountable
     }
 
     /**
+     * Debit entries relation
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
@@ -123,6 +166,7 @@ trait Accountable
     }
 
     /**
+     * Credit entries relation
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
